@@ -1,0 +1,28 @@
+{
+  "name": "my-wave-portal",
+  "version": "1.0.0",
+  "description": "A web3 project -- People come to my site and can wave at me + send a message. Waves get stored on-chain.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antdke/my-wave-portal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antdke/my-wave-portal/issues"
+  },
+  "homepage": "https://github.com/antdke/my-wave-portal#readme",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.4.7",
+    "hardhat": "^2.6.4"
+  }
+}
