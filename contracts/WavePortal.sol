@@ -17,6 +17,7 @@ contract WavePortal {
 
     function wave() public {
         totalWaves += 1;
+        addressToWaves[msg.sender] += 1;
         console.log("%s has waved", msg.sender);
     }
 
@@ -26,5 +27,13 @@ contract WavePortal {
         return totalWaves;
     }
 
-    function getAddressToWaves() public view returns (uint256) {}
+    // return amount of waves for an address
+    function getAddressToWaves(address _address) public view returns (uint256) {
+        console.log(
+            "%s waved at us %d times!",
+            _address,
+            addressToWaves[_address]
+        );
+        return addressToWaves[_address];
+    }
 }
