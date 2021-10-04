@@ -1,3 +1,8 @@
+/* 
+* This script creates a temp local network to run the code line by line
+* to see how it works. Then it destroys that local network immediately after.
+*/
+
 const main = async () => {
   const [owner, randomPerson] = await hre.ethers.getSigners(); // get fake accounts?
   const waveContractFactory = await hre.ethers.getContractFactory('WavePortal');
