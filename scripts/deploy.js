@@ -1,6 +1,6 @@
 /*
-* This script creates a persistent local network. An entire blockchain. 
-* With 20 usable account with 1000 ETH.
+* This script deploys to a persistent network. Rinkeby, Mainnet, Localhost
+* If localhost, then with 20 usable account with 1000 ETH.
 */
 
 const main = async () => {

@@ -17,5 +17,13 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: '0.8.4',
+  networks: {
+    rinkeby: {
+      url: 'https://eth-rinkeby.alchemyapi.io/v2/8LJ50qkZ_qAze1W0wJxzo7o7K6VqonMm',
+      accounts: ['31a7b35103c6a75aab1dc67c08e4c4274121445e9409fe69102239de2cd10463'],
+    },
+  },
 };
+
+// WavePortal contract address: 0x0A02d3F51CF74161877BFDe332F96dFa5B46975E
