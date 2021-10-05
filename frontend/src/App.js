@@ -95,6 +95,9 @@ export default function App() {
         let count = await wavePortalContract.getTotalWaves();
         console.log("Recieved total wave count...", count.toNumber());
 
+        /*
+        * Execute a wave from the smart contract
+        */
         const waveTxn = wavePortalContract.wave();
         console.log("Mining...", waveTxn.hash);
 
