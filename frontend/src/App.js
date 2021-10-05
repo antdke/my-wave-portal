@@ -10,6 +10,16 @@ export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
 
   /*
+  * State variable to store count of total waves
+  */
+  const [waveCount, setWaveCount] = useState(0);
+
+  /*
+  * State variable to track loading
+  */
+  const [isLoading, setIsLoading] = useState(false);
+
+  /*
   * Address of my WavePortal contract on the Rinkeby testnet
   */
   const contractAddress = '0x0A02d3F51CF74161877BFDe332F96dFa5B46975E';
@@ -93,6 +103,7 @@ export default function App() {
 
         // Send trx to contract and log results to console to test
         let count = await wavePortalContract.getTotalWaves();
+        setWaveCount(parseInt(count));
         console.log("Recieved total wave count...", count.toNumber());
 
         /*
@@ -101,10 +112,14 @@ export default function App() {
         const waveTxn = await wavePortalContract.wave();
         console.log("Mining...", waveTxn.hash);
 
+        setIsLoading(true); // mining is happening
+
         await waveTxn.wait();
         console.log("Mined --", waveTxn.hash);
+        setIsLoading(false);
 
         count = await wavePortalContract.getTotalWaves();
+        setWaveCount(parseInt(count));
         console.log("Recieved total wave count...", count.toNumber());
       } else {
         console.log("Ethereum object doesn't exist!")
@@ -113,6 +128,20 @@ export default function App() {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  /*
+  * This is for the text under the button when the transaction is loading/being mined
+  */
+  let waveText;
+  if (isLoading) {
+    waveText = (<div class="spinner">
+      <div class="bounce1"></div>
+      <div class="bounce2"></div>
+      <div class="bounce3"></div>
+    </div>)
+  } else {
+    waveText = (<div className="waveCountText">(Total # of waves: {waveCount})</div>)
   }
 
 
@@ -142,6 +171,7 @@ export default function App() {
           Connect Wallet
         </button>)}
         <button className="connectWalletButton" onClick={wave}>Wave at Me</button>
+        {waveText}
       </div>
     </div>
   );
