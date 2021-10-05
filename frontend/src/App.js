@@ -8,6 +8,9 @@ export default function App() {
   */
   const [currentAccount, setCurrentAccount] = useState("");
 
+  /*
+  * This function tells us, in the console, if a wallet with eth accounts exists
+  */
   const checkIfWalletIsConnected = async () => {
     try {
       /*
@@ -51,6 +54,9 @@ export default function App() {
         return;
       }
 
+      /*
+      * This makes MetaMask pop up - Requests user connect wallet to site
+      */
       const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 
       console.log("Connected", accounts[0]);
