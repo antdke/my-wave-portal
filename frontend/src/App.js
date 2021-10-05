@@ -98,7 +98,7 @@ export default function App() {
         /*
         * Execute a wave from the smart contract
         */
-        const waveTxn = wavePortalContract.wave();
+        const waveTxn = await wavePortalContract.wave();
         console.log("Mining...", waveTxn.hash);
 
         await waveTxn.wait();
