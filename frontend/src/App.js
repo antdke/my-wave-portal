@@ -9,6 +9,11 @@ export default function App() {
   const [currentAccount, setCurrentAccount] = useState("");
 
   /*
+  * Address of my WavePortal contract on the Rinkeby testnet
+  */
+  const contractAddress = '0x0A02d3F51CF74161877BFDe332F96dFa5B46975E';
+
+  /*
   * This function tells us, in the console, if a wallet with eth accounts exists
   */
   const checkIfWalletIsConnected = async () => {
@@ -66,6 +71,28 @@ export default function App() {
     }
   }
 
+  const wave = async () => {
+    try {
+      // Check if MetaMask is in the browser
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        let count = await wavePortalContract.getTotalWaves();
+        console.log("Recieved total wave count...", count.toNumber());
+      } else {
+        console.log("Ethereum object doesn't exist!")
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
   /*
   * Run function when page loads
   */
@@ -89,8 +116,9 @@ export default function App() {
         * If there is no current wallet, then render this button
         */}
         {!currentAccount && (<button className="waveButton" onClick={connectWallet}>
-          Wave at Me
+          Connect Wallet
         </button>)}
+        <button className="connectWalletButton" onClick={wave}>Wave at Me</button>
       </div>
     </div>
   );
