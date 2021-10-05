@@ -40,8 +40,29 @@ export default function App() {
   }
 
   /*
-    * Run function when page loads
-    */
+  * Connect wallet method
+  */
+  const connectWallet = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (!ethereum) {
+        alert("Get MetaMask!");
+        return;
+      }
+
+      const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+
+      console.log("Connected", accounts[0]);
+      setCurrentAccount(accounts[0])
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  /*
+  * Run function when page loads
+  */
   useEffect(() => {
     checkIfWalletIsConnected();
   }, [])
@@ -58,9 +79,12 @@ export default function App() {
           I'm Anthony :)
         </div>
 
-        <button className="waveButton" onClick={null}>
+        {/*
+        * If there is no current wallet, then render this button
+        */}
+        {!currentAccount && (<button className="waveButton" onClick={connectWallet}>
           Wave at Me
-        </button>
+        </button>)}
       </div>
     </div>
   );
