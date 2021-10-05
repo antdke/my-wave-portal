@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import './App.css';
+import abi from './utils/WavePortal.json'
 
 export default function App() {
   /*
@@ -12,6 +13,11 @@ export default function App() {
   * Address of my WavePortal contract on the Rinkeby testnet
   */
   const contractAddress = '0x0A02d3F51CF74161877BFDe332F96dFa5B46975E';
+
+  /*
+  * A variable that references to the ABI
+  */
+  const contractABI = abi.abi;
 
   /*
   * This function tells us, in the console, if a wallet with eth accounts exists
