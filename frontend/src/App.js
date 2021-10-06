@@ -5,7 +5,7 @@ import abi from './utils/WavePortal.json'
 
 export default function App() {
   /*
-  * State variable to store our user's public wallet
+  * State variable to store our user's public address
   */
   const [currentAccount, setCurrentAccount] = useState("");
 
@@ -18,6 +18,11 @@ export default function App() {
   * State variable to track loading
   */
   const [isLoading, setIsLoading] = useState(false);
+
+  /*
+  * A state property to store all waves (Wave Structs)
+  */
+  const [allWaves, setAllWaves] = useState([])
 
   /*
   * Address of my WavePortal contract on the Rinkeby testnet
@@ -55,6 +60,7 @@ export default function App() {
         const account = accounts[0];
         console.log("Found an authorized account", account);
         setCurrentAccount(account);
+        getAllWaves();
       } else {
         console.log("No authorized account found");
       }
@@ -87,6 +93,47 @@ export default function App() {
     }
   }
 
+  /*
+  * Function to get all waves
+  */
+  const getAllWaves = async () => {
+    try {
+      const { ethereum } = window; // checking for MetaMask wallet
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        /*
+        * call the  getAllWaves method from smart contract
+        */
+        const waves = await wavePortalContract.getAllWaves();
+        console.log("WAVES:", waves);
+        /*
+        * Pick out the user address, wave timestamp, and wave message from struct
+        */
+        let wavesCleaned = [];
+        waves.forEach(wave => {
+          wavesCleaned.push({
+            address: wave.waver,
+            timestamp: new Date(wave.timestamp * 1000),
+            message: wave.message
+          })
+        });
+
+        /*
+        * Store the AllWaves data in React state
+        */
+        setAllWaves(wavesCleaned);
+        console.log("WAVES CLEANED", wavesCleaned);
+      } else {
+        console.log("Ethereum object does not exist!")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const wave = async () => {
     try {
       // Check if MetaMask is in the browser
@@ -109,7 +156,7 @@ export default function App() {
         /*
         * Execute a wave from the smart contract
         */
-        const waveTxn = await wavePortalContract.wave();
+        const waveTxn = await wavePortalContract.wave("This is a message!");
         console.log("Mining...", waveTxn.hash);
 
         setIsLoading(true); // mining is happening
@@ -135,10 +182,10 @@ export default function App() {
   */
   let waveText;
   if (isLoading) {
-    waveText = (<div class="spinner">
-      <div class="bounce1"></div>
-      <div class="bounce2"></div>
-      <div class="bounce3"></div>
+    waveText = (<div className="spinner">
+      <div className="bounce1"></div>
+      <div className="bounce2"></div>
+      <div className="bounce3"></div>
     </div>)
   } else {
     waveText = (<div className="waveCountText">(Total # of waves: {waveCount})</div>)
@@ -172,6 +219,15 @@ export default function App() {
         </button>)}
         <button className="connectWalletButton" onClick={wave}>Wave at Me</button>
         {waveText}
+
+        {allWaves.map((wave, index) => {
+          return (<div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
+            <div>Address: {wave.address}</div>
+            <div>Time: {wave.timestamp.toString()}</div>
+            <div>Message: {wave.message}</div>
+          </div>)
+        })}
+
       </div>
     </div>
   );
