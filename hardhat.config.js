@@ -26,4 +26,15 @@ module.exports = {
   },
 };
 
-// WavePortal contract address: 0x0A02d3F51CF74161877BFDe332F96dFa5B46975E
+
+// WavePortal contract address: 0x80F2578094E130461d48AC3f958A7B046EFa4e50
+/*
+* WHENEVER I UPDATE CONTRACT:
+*
+* 1) Redeploy: npx hardhat run scripts/deploy.js --network rinkeby
+*
+* 2) Update the contract address (above and in App.js) with new address shown in terminal
+*
+* 3) Use this terminal command to replace ABI:
+* cp ../artifacts/contracts/WavePortal.sol/WavePortal.json ./src/utils/
+*/
