@@ -27,7 +27,7 @@ module.exports = {
 };
 
 
-// WavePortal contract address: 0x80F2578094E130461d48AC3f958A7B046EFa4e50
+// WavePortal contract address: 0x11cf4d9Bb0fA7B01841Bb81B29862C0FAE1C8a9C
 /*
 * WHENEVER I UPDATE CONTRACT:
 *
@@ -35,6 +35,6 @@ module.exports = {
 *
 * 2) Update the contract address (above and in App.js) with new address shown in terminal
 *
-* 3) Use this terminal command to replace ABI:
+* 3) Use this terminal command FROM FRONTEND FOLDER to replace ABI:
 * cp ../artifacts/contracts/WavePortal.sol/WavePortal.json ./src/utils/
 */

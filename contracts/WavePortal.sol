@@ -50,7 +50,7 @@ contract WavePortal {
             prizeAmount <= address(this).balance,
             "Trying to withdraw more money than this contract has."
         );
-        (bool success, ) = (msg.sender).call{value: prizeAmount}("");
+        (bool success, ) = (msg.sender).call{value: prizeAmount}(""); // this pays the user
         require(success, "Failed to withdraw money from contract.");
     }
 
