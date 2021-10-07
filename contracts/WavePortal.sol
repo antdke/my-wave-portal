@@ -25,23 +25,33 @@ contract WavePortal {
      */
     Wave[] waves;
 
-    constructor() {
+    constructor() payable {
         console.log(
             "This is my smart contract. There are many like this. But, this one is mine."
         );
     }
 
     function wave(string memory _message) public {
+        // increment total wave count by 1
         totalWaves += 1;
+        // attribute that wave to the address that waved and store that data in the map
         addressToWaves[msg.sender] += 1;
+        // console log who waved and their wave message
         console.log("%s has waved w/ message: %s", msg.sender, _message);
-
-        /*
-         * Storing the wave data in an array
-         */
+        // Storing the wave message in an array
         waves.push(Wave(msg.sender, _message, block.timestamp));
 
         emit NewWave(msg.sender, block.timestamp, _message);
+
+        // GIVING PEOPLE FREE $ FOR WAVING AT ME
+        uint256 prizeAmount = 0.0001 ether; // about $0.31
+        // Requires that the free money is only given out if this contract has enough funds
+        require(
+            prizeAmount <= address(this).balance,
+            "Trying to withdraw more money than this contract has."
+        );
+        (bool success, ) = (msg.sender).call{value: prizeAmount}("");
+        require(success, "Failed to withdraw money from contract.");
     }
 
     /*
