@@ -12,6 +12,14 @@
   max-width: 600px;
 }
 
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
 .header {
   text-align: center;
   font-size: 32px;
@@ -39,6 +47,7 @@
   padding: 8px;
   border: 0;
   border-radius: 5px;
+
 }
 
 .waveCountText {
@@ -48,8 +57,20 @@
   font-size: 90%;
 }
 
+.textarea {
+  outline: none;
+  resize: none;
+  margin-top: 32px;
+  border: 2px solid lightslategray;
+  border-radius: 5px;
+}
+
+.waveContainer {
+  margin-top: 24px;
+}
+
 .spinner {
-  margin: 100px auto 0;
+  margin: 48px auto 24px;
   width: 70px;
   text-align: center;
 }

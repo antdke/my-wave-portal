@@ -156,7 +156,7 @@ export default function App() {
         /*
         * Execute a wave from the smart contract
         */
-        const waveTxn = await wavePortalContract.wave("This is a message!");
+        const waveTxn = await wavePortalContract.wave(document.getElementById("waveMessage").value);
         console.log("Mining...", waveTxn.hash);
 
         setIsLoading(true); // mining is happening
@@ -165,6 +165,8 @@ export default function App() {
         console.log("Mined --", waveTxn.hash);
         setIsLoading(false);
 
+        // After the user waves
+        getAllWaves();
         count = await wavePortalContract.getTotalWaves();
         setWaveCount(parseInt(count));
         console.log("Recieved total wave count...", count.toNumber());
@@ -188,7 +190,22 @@ export default function App() {
       <div className="bounce3"></div>
     </div>)
   } else {
-    waveText = (<div className="waveCountText">(Total # of waves: {waveCount})</div>)
+    waveText = (<div>
+      <div className="inputContainer">
+        <textarea className="textarea" id="waveMessage" placeholder="Write me a message..." cols="30" rows="5"></textarea>
+
+        {/*
+          * If there is no current wallet, then render this button
+          */}
+        {!currentAccount && (<button className="connectWalletButton" onClick={connectWallet}>
+          Connect Wallet
+        </button>)}
+
+        <button className="waveButton" onClick={wave}>Wave at Me</button>
+      </div>
+      <div className="waveCountText">(Total # of waves: {waveCount})</div>
+    </div>
+    )
   }
 
 
@@ -211,22 +228,17 @@ export default function App() {
           I'm Anthony :)
         </div>
 
-        {/*
-        * If there is no current wallet, then render this button
-        */}
-        {!currentAccount && (<button className="waveButton" onClick={connectWallet}>
-          Connect Wallet
-        </button>)}
-        <button className="connectWalletButton" onClick={wave}>Wave at Me</button>
         {waveText}
+        <div className="waveContainer">
+          {allWaves.slice(0).reverse().map((wave, index) => {
+            return (<div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
+              <div>Address: {wave.address}</div>
+              <div>Time: {wave.timestamp.toString()}</div>
+              <div>Message: {wave.message}</div>
+            </div>)
+          })}
+        </div>
 
-        {allWaves.map((wave, index) => {
-          return (<div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
-            <div>Address: {wave.address}</div>
-            <div>Time: {wave.timestamp.toString()}</div>
-            <div>Message: {wave.message}</div>
-          </div>)
-        })}
 
       </div>
     </div>
