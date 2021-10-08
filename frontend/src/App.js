@@ -27,7 +27,7 @@ export default function App() {
   /*
   * Address of my WavePortal contract on the Rinkeby testnet
   */
-  const contractAddress = '0x11cf4d9Bb0fA7B01841Bb81B29862C0FAE1C8a9C';
+  const contractAddress = '0xC6c1142590F0147f72c066Ef00c1789EC389894e';
 
   /*
   * A variable that references to the ABI
