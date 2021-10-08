@@ -125,6 +125,21 @@ export default function App() {
         * Store the AllWaves data in React state
         */
         setAllWaves(wavesCleaned);
+
+
+        /*
+        * Listen for emitter events
+        */
+        wavePortalContract.on("NewWave", (from, timestamp, message) => {
+          console.log("NewWave", from, timestamp, message);
+
+          setAllWaves(prevState => [...prevState, {
+            address: from,
+            timestamp: new Date(timestamp * 1000),
+            message: message
+          }]);
+        });
+
         console.log("WAVES CLEANED", wavesCleaned);
       } else {
         console.log("Ethereum object does not exist!")
