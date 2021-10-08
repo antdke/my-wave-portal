@@ -8,6 +8,11 @@ contract WavePortal {
     uint256 totalWaves;
 
     /*
+     * A variable to help generate a random number
+     */
+    uint256 private seed;
+
+    /*
      * Key-value pair to keep track of who sent a wave
      */
     mapping(address => uint256) public addressToWaves;
@@ -41,17 +46,30 @@ contract WavePortal {
         // Storing the wave message in an array
         waves.push(Wave(msg.sender, _message, block.timestamp));
 
-        emit NewWave(msg.sender, block.timestamp, _message);
+        // Generates a psuedo random number between 0 and 100.
+        uint256 randomNumber = (block.timestamp + block.difficulty + seed) %
+            100;
+        console.log("Random # generate: %d", randomNumber);
 
-        // GIVING PEOPLE FREE $ FOR WAVING AT ME
-        uint256 prizeAmount = 0.0001 ether; // about $0.31
-        // Requires that the free money is only given out if this contract has enough funds
-        require(
-            prizeAmount <= address(this).balance,
-            "Trying to withdraw more money than this contract has."
-        );
-        (bool success, ) = (msg.sender).call{value: prizeAmount}(""); // this pays the user
-        require(success, "Failed to withdraw money from contract.");
+        // Sets the random generated number as the seed for the next random number -- clever
+        seed = randomNumber;
+
+        // Gives the user a 50% chance that they'll win the 0.0001 ETH
+        if (randomNumber < 50) {
+            console.log("%s won!", msg.sender);
+
+            // GIVING PEOPLE FREE $ FOR WAVING AT ME
+            uint256 prizeAmount = 0.0001 ether; // about $0.31
+            // Requires that the free money is only given out if this contract has enough funds
+            require(
+                prizeAmount <= address(this).balance,
+                "Trying to withdraw more money than this contract has."
+            );
+            (bool success, ) = (msg.sender).call{value: prizeAmount}(""); // this pays the user
+            require(success, "Failed to withdraw money from contract.");
+        }
+
+        emit NewWave(msg.sender, block.timestamp, _message);
     }
 
     /*

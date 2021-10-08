@@ -9,7 +9,7 @@ const main = async () => {
 
   const waveContractFactory = await hre.ethers.getContractFactory('WavePortal');
   const waveContract = await waveContractFactory.deploy({
-    value: hre.ethers.utils.parseEther('0.1'),
+    value: hre.ethers.utils.parseEther('0.001'),
   }); // this deploys to local blockchain
   await waveContract.deployed();
 
@@ -31,9 +31,21 @@ const main = async () => {
   )
 
   /*
-  * Send wave
+  * Send wave #1
   */
-  let waveTxn = await waveContract.wave("A message from Anthony! :)");
+  let waveTxn = await waveContract.wave("This is wave #1");
+  waveTxn.wait();
+
+  /*
+  * Send wave #2
+  */
+  waveTxn = await waveContract.wave("This is wave #2");
+  waveTxn.wait();
+
+  /*
+  * Send wave #3
+  */
+  waveTxn = await waveContract.wave("This is wave #3");
   waveTxn.wait();
 
   /*
