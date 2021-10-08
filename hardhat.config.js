@@ -21,19 +21,19 @@ module.exports = {
   solidity: '0.8.4',
   networks: {
     rinkeby: {
-      url: process.env.STAGING_ALCHEMY_KEY,
+      url: process.env.RINKEBY_ALCHEMY_KEY,
       accounts: [process.env.PRIVATE_KEY],
     },
     mainnet: {
       chainId: 1,
-      url: process.env.PROD_ALCHEMY_KEY,
+      url: process.env.MAINNET_ALCHEMY_KEY,
       accounts: [process.env.PRIVATE_KEY],
     },
   },
 };
 
 
-// WavePortal contract address: 0xC6c1142590F0147f72c066Ef00c1789EC389894e
+// WavePortal contract address: 0xcb245b9A55E320219A1B33Ef019691fC9D4c2493
 /*
 * WHENEVER I UPDATE CONTRACT:
 *

@@ -27,7 +27,7 @@ export default function App() {
   /*
   * Address of my WavePortal contract on the Rinkeby testnet
   */
-  const contractAddress = '0xC6c1142590F0147f72c066Ef00c1789EC389894e';
+  const contractAddress = '0xcb245b9A55E320219A1B33Ef019691fC9D4c2493';
 
   /*
   * A variable that references to the ABI
@@ -171,7 +171,7 @@ export default function App() {
         /*
         * Execute a wave from the smart contract
         */
-        const waveTxn = await wavePortalContract.wave(document.getElementById("waveMessage").value, { gasLimit: 300000 });
+        const waveTxn = await wavePortalContract.wave(document.getElementById("waveMessage").value, { gasLimit: 100000 });
         console.log("Mining...", waveTxn.hash);
 
         setIsLoading(true); // mining is happening

@@ -36,17 +36,7 @@ const main = async () => {
   let waveTxn = await waveContract.wave("This is wave #1");
   waveTxn.wait();
 
-  /*
-  * Send wave #2
-  */
-  waveTxn = await waveContract.wave("This is wave #2");
-  waveTxn.wait();
 
-  /*
-  * Send wave #3
-  */
-  waveTxn = await waveContract.wave("This is wave #3");
-  waveTxn.wait();
 
   /*
   * Get wave contract balance to see what happens
