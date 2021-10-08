@@ -17,6 +17,12 @@ contract WavePortal {
      */
     mapping(address => uint256) public addressToWaves;
 
+    /*
+     * Key-value pair to keep track of the last time each user waved
+     * -- they have to wait 15m between each wave to prevent spamming
+     */
+    mapping(address => uint256) public lastWavedAt;
+
     event NewWave(address indexed from, uint256 timestamp, string message);
 
     struct Wave {
@@ -37,6 +43,15 @@ contract WavePortal {
     }
 
     function wave(string memory _message) public {
+        // Make sure that the user has waited at least 15 between their waves
+        require(
+            lastWavedAt[msg.sender] + 15 minutes < block.timestamp,
+            "You have to wait 15m between waves!"
+        );
+
+        // Update this user's last wave timestamp
+        lastWavedAt[msg.sender] = block.timestamp;
+
         // increment total wave count by 1
         totalWaves += 1;
         // attribute that wave to the address that waved and store that data in the map
@@ -54,8 +69,8 @@ contract WavePortal {
         // Sets the random generated number as the seed for the next random number -- clever
         seed = randomNumber;
 
-        // Gives the user a 50% chance that they'll win the 0.0001 ETH
-        if (randomNumber < 50) {
+        // Gives the user a 25% chance that they'll win the 0.0001 ETH
+        if (randomNumber < 25) {
             console.log("%s won!", msg.sender);
 
             // GIVING PEOPLE FREE $ FOR WAVING AT ME
