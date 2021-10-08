@@ -156,7 +156,7 @@ export default function App() {
         /*
         * Execute a wave from the smart contract
         */
-        const waveTxn = await wavePortalContract.wave(document.getElementById("waveMessage").value);
+        const waveTxn = await wavePortalContract.wave(document.getElementById("waveMessage").value, { gasLimit: 300000 });
         console.log("Mining...", waveTxn.hash);
 
         setIsLoading(true); // mining is happening
