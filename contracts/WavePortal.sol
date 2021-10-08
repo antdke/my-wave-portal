@@ -45,8 +45,8 @@ contract WavePortal {
     function wave(string memory _message) public {
         // Make sure that the user has waited at least 15 between their waves
         require(
-            lastWavedAt[msg.sender] + 15 minutes < block.timestamp,
-            "You have to wait 15m between waves!"
+            lastWavedAt[msg.sender] + 1 minutes < block.timestamp,
+            "Must wait 1 minute before waving again!"
         );
 
         // Update this user's last wave timestamp
