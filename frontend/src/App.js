@@ -141,6 +141,7 @@ export default function App() {
         });
 
         console.log("WAVES CLEANED", wavesCleaned);
+        console.log("ALL WAVES", allWaves);
       } else {
         console.log("Ethereum object does not exist!")
       }
@@ -171,7 +172,7 @@ export default function App() {
         /*
         * Execute a wave from the smart contract
         */
-        const waveTxn = await wavePortalContract.wave(document.getElementById("waveMessage").value, { gasLimit: 100000 });
+        const waveTxn = await wavePortalContract.wave(document.getElementById("waveMessage").value, { gasLimit: 300000 });
         console.log("Mining...", waveTxn.hash);
 
         setIsLoading(true); // mining is happening
@@ -181,7 +182,6 @@ export default function App() {
         setIsLoading(false);
 
         // After the user waves
-        getAllWaves();
         count = await wavePortalContract.getTotalWaves();
         setWaveCount(parseInt(count));
         console.log("Recieved total wave count...", count.toNumber());
