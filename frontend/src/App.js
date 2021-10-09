@@ -61,6 +61,9 @@ export default function App() {
         console.log("Found an authorized account", account);
         setCurrentAccount(account);
         getAllWaves();
+
+        // If the waveCount has been stored in localStorage previously, then grab it
+        typeof parseInt(localStorage.getItem('waveCount')) === "number" ? setWaveCount(localStorage.getItem('waveCount')) : setWaveCount(0);
       } else {
         console.log("No authorized account found");
       }
@@ -166,6 +169,7 @@ export default function App() {
 
         // Send trx to contract and log results to console to test
         let count = await wavePortalContract.getTotalWaves();
+        localStorage.setItem('waveCount', count)// save count to localStorage 
         setWaveCount(parseInt(count));
         console.log("Recieved total wave count...", count.toNumber());
 
@@ -183,6 +187,7 @@ export default function App() {
 
         // After the user waves
         count = await wavePortalContract.getTotalWaves();
+        localStorage.setItem('waveCount', count)// save count to localStorage 
         setWaveCount(parseInt(count));
         console.log("Recieved total wave count...", count.toNumber());
       } else {
