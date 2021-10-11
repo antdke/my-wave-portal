@@ -1,5 +1,7 @@
 A web3 project -- People come to my site and can wave at me + send a message. Waves get stored on-chain.
 
+(It's currently deployed on the Rinkeby network, not Mainnet)
+
 ![](https://res.cloudinary.com/antdke/image/upload/v1633922099/waveportal_complete_xz1a0q.gif)
 
 
