@@ -91,6 +91,7 @@ export default function App() {
 
       console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0])
+      getAllWaves();
     } catch (error) {
       console.log(error)
     }
@@ -245,14 +246,14 @@ export default function App() {
         </div>
 
         <div className="bio">
-          I'm Anthony :)
+          I'm Anthony :) Welcome to my portal. Send a message to me through the blockchain...You might win some free ETH.
         </div>
 
         {waveText}
         <div className="waveContainer">
           {allWaves.slice(0).reverse().map((wave, index) => {
             return (<div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
-              <div>Address: {wave.address}</div>
+              <div>From: {wave.address}</div>
               <div>Time: {wave.timestamp.toString()}</div>
               <div>Message: {wave.message}</div>
             </div>)
